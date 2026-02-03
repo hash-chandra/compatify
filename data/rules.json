@@ -2,6 +2,22 @@
   "rules": [
     {
       "package": "react",
+      "version": "^19.0.0",
+      "incompatibleWith": [
+        {
+          "package": "react-dom",
+          "versionRange": "<19.0.0",
+          "reason": "React 19 requires react-dom 19 for new features including compiler and actions",
+          "severity": "error",
+          "fix": "npm install react-dom@^19.0.0"
+        }
+      ],
+      "requires": {
+        "node": ">=18.0.0"
+      }
+    },
+    {
+      "package": "react",
       "version": "^18.0.0",
       "incompatibleWith": [
         {
@@ -60,6 +76,29 @@
     },
     {
       "package": "eslint",
+      "version": "^9.0.0",
+      "incompatibleWith": [
+        {
+          "package": "eslint-plugin-react",
+          "versionRange": "<7.33.0",
+          "reason": "ESLint 9 requires eslint-plugin-react 7.33.0 or higher for flat config support",
+          "severity": "error",
+          "fix": "npm install eslint-plugin-react@^7.33.0"
+        }
+      ],
+      "requires": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "warnings": [
+        {
+          "condition": "eslintrc",
+          "message": "ESLint 9 uses flat config by default. Legacy .eslintrc files require ESLINT_USE_FLAT_CONFIG=false or migration",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "package": "eslint",
       "version": "^8.0.0",
       "incompatibleWith": [
         {
@@ -76,6 +115,20 @@
     },
     {
       "package": "typescript",
+      "version": "^5.6.0",
+      "requires": {
+        "node": ">=18.0.0"
+      },
+      "warnings": [
+        {
+          "condition": "node<20.0.0",
+          "message": "TypeScript 5.6+ works best with Node.js 20 or higher",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "package": "typescript",
       "version": "^5.0.0",
       "requires": {
         "node": ">=14.17"
@@ -85,6 +138,22 @@
           "condition": "node<16.0.0",
           "message": "TypeScript 5.0+ works best with Node.js 16 or higher",
           "severity": "warning"
+        }
+      ]
+    },
+    {
+      "package": "jest",
+      "version": "^30.0.0",
+      "requires": {
+        "node": "^18.0.0 || ^20.0.0 || >=22.0.0"
+      },
+      "incompatibleWith": [
+        {
+          "package": "ts-jest",
+          "versionRange": "<29.2.0",
+          "reason": "Jest 30 requires ts-jest 29.2.0 or higher for TypeScript support",
+          "severity": "error",
+          "fix": "npm install ts-jest@^29.2.0"
         }
       ]
     },
@@ -103,6 +172,52 @@
           "fix": "npm install ts-jest@^29.0.0"
         }
       ]
+    },
+    {
+      "package": "vitest",
+      "version": "^1.0.0",
+      "requires": {
+        "node": "^18.0.0 || >=20.0.0"
+      },
+      "incompatibleWith": [
+        {
+          "package": "vite",
+          "versionRange": "<5.0.0",
+          "reason": "Vitest 1.x works best with Vite 5 or higher",
+          "severity": "warning",
+          "fix": "npm install vite@^5.0.0"
+        }
+      ]
+    },
+    {
+      "package": "mocha",
+      "version": "^10.0.0",
+      "requires": {
+        "node": ">=14.0.0"
+      }
+    },
+    {
+      "package": "@testing-library/react",
+      "version": "^14.0.0",
+      "incompatibleWith": [
+        {
+          "package": "react",
+          "versionRange": "<18.0.0",
+          "reason": "React Testing Library 14 requires React 18 or higher",
+          "severity": "error",
+          "fix": "npm install react@^18.0.0 react-dom@^18.0.0"
+        }
+      ],
+      "requires": {
+        "node": ">=14.0.0"
+      }
+    },
+    {
+      "package": "jasmine",
+      "version": "^5.0.0",
+      "requires": {
+        "node": "^18.0.0 || >=20.0.0"
+      }
     },
     {
       "package": "vue",
@@ -125,6 +240,103 @@
       ]
     },
     {
+      "package": "@playwright/test",
+      "version": "^1.40.0",
+      "requires": {
+        "node": ">=18.0.0"
+      },
+      "warnings": [
+        {
+          "condition": "node<20.0.0",
+          "message": "Playwright works best with Node.js 20 or higher for optimal performance",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "package": "playwright",
+      "version": "^1.40.0",
+      "requires": {
+        "node": ">=18.0.0"
+      }
+    },
+    {
+      "package": "cypress",
+      "version": "^13.0.0",
+      "requires": {
+        "node": "^16.0.0 || ^18.0.0 || >=20.0.0"
+      },
+      "warnings": [
+        {
+          "condition": "node>=21.0.0",
+          "message": "Cypress may have compatibility issues with Node.js 21+. Verify support in release notes",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "package": "webdriverio",
+      "version": "^8.0.0",
+      "requires": {
+        "node": ">=16.13.0 || >=18.0.0"
+      },
+      "incompatibleWith": [
+        {
+          "package": "@wdio/cli",
+          "versionRange": "<8.0.0",
+          "reason": "WebdriverIO 8 requires @wdio/cli 8 or higher",
+          "severity": "error",
+          "fix": "npm install @wdio/cli@^8.0.0"
+        }
+      ]
+    },
+    {
+      "package": "selenium-webdriver",
+      "version": "^4.0.0",
+      "requires": {
+        "node": ">=14.0.0"
+      },
+      "warnings": [
+        {
+          "condition": "modern-browsers",
+          "message": "Consider using Playwright or Cypress for modern browser automation with better developer experience",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "package": "next",
+      "version": "^15.0.0",
+      "incompatibleWith": [
+        {
+          "package": "react",
+          "versionRange": "<19.0.0",
+          "reason": "Next.js 15 requires React 19 for React Compiler and enhanced features",
+          "severity": "error",
+          "fix": "npm install react@^19.0.0 react-dom@^19.0.0"
+        }
+      ],
+      "requires": {
+        "node": ">=18.18.0"
+      }
+    },
+    {
+      "package": "next",
+      "version": "^14.0.0",
+      "incompatibleWith": [
+        {
+          "package": "react",
+          "versionRange": "<18.2.0",
+          "reason": "Next.js 14 requires React 18.2.0 or higher",
+          "severity": "error",
+          "fix": "npm install react@^18.2.0 react-dom@^18.2.0"
+        }
+      ],
+      "requires": {
+        "node": ">=18.17.0"
+      }
+    },
+    {
       "package": "next",
       "version": "^13.0.0",
       "incompatibleWith": [
@@ -142,6 +354,52 @@
     },
     {
       "package": "@angular/core",
+      "version": "^18.0.0",
+      "incompatibleWith": [
+        {
+          "package": "@angular/cli",
+          "versionRange": "<18.0.0",
+          "reason": "Angular 18 requires Angular CLI 18 or higher",
+          "severity": "error",
+          "fix": "npm install @angular/cli@^18.0.0"
+        },
+        {
+          "package": "typescript",
+          "versionRange": "<5.4.0 || >=5.6.0",
+          "reason": "Angular 18 requires TypeScript 5.4.x or 5.5.x",
+          "severity": "error",
+          "fix": "npm install typescript@~5.5.0"
+        }
+      ],
+      "requires": {
+        "node": "^18.19.1 || ^20.11.1 || >=22.0.0"
+      }
+    },
+    {
+      "package": "@angular/core",
+      "version": "^17.0.0",
+      "incompatibleWith": [
+        {
+          "package": "@angular/cli",
+          "versionRange": "<17.0.0",
+          "reason": "Angular 17 requires Angular CLI 17 or higher",
+          "severity": "error",
+          "fix": "npm install @angular/cli@^17.0.0"
+        },
+        {
+          "package": "typescript",
+          "versionRange": "<5.2.0 || >=5.4.0",
+          "reason": "Angular 17 requires TypeScript 5.2.x or 5.3.x",
+          "severity": "error",
+          "fix": "npm install typescript@~5.3.0"
+        }
+      ],
+      "requires": {
+        "node": "^18.13.0 || >=20.9.0"
+      }
+    },
+    {
+      "package": "@angular/core",
       "version": "^15.0.0",
       "incompatibleWith": [
         {
@@ -155,6 +413,195 @@
       "requires": {
         "node": "^14.20.0 || ^16.13.0 || >=18.10.0"
       }
+    },
+    {
+      "package": "vite",
+      "version": "^5.0.0",
+      "requires": {
+        "node": "^18.0.0 || >=20.0.0"
+      }
+    },
+    {
+      "package": "astro",
+      "version": "^4.0.0",
+      "requires": {
+        "node": "^18.17.1 || ^20.3.0 || >=21.0.0"
+      },
+      "warnings": [
+        {
+          "condition": "node<20.0.0",
+          "message": "Astro 4.x works best with Node.js 20 or higher",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "package": "@remix-run/react",
+      "version": "^2.0.0",
+      "incompatibleWith": [
+        {
+          "package": "react",
+          "versionRange": "<18.0.0",
+          "reason": "Remix 2 requires React 18 or higher",
+          "severity": "error",
+          "fix": "npm install react@^18.0.0 react-dom@^18.0.0"
+        },
+        {
+          "package": "@remix-run/node",
+          "versionRange": "<2.0.0",
+          "reason": "All Remix packages should use the same major version",
+          "severity": "error",
+          "fix": "npm install @remix-run/node@^2.0.0"
+        }
+      ],
+      "requires": {
+        "node": ">=18.0.0"
+      }
+    },
+    {
+      "package": "@sveltejs/kit",
+      "version": "^2.0.0",
+      "incompatibleWith": [
+        {
+          "package": "svelte",
+          "versionRange": "<4.0.0",
+          "reason": "SvelteKit 2 requires Svelte 4 or higher",
+          "severity": "error",
+          "fix": "npm install svelte@^4.0.0"
+        }
+      ],
+      "requires": {
+        "node": "^18.13.0 || >=20.0.0"
+      }
+    },
+    {
+      "package": "nuxt",
+      "version": "^3.0.0",
+      "incompatibleWith": [
+        {
+          "package": "vue",
+          "versionRange": "<3.3.0",
+          "reason": "Nuxt 3 requires Vue 3.3 or higher",
+          "severity": "error",
+          "fix": "npm install vue@^3.3.0"
+        }
+      ],
+      "requires": {
+        "node": "^16.10.0 || ^18.0.0 || >=20.0.0"
+      }
+    },
+    {
+      "package": "svelte",
+      "version": "^5.0.0",
+      "requires": {
+        "node": ">=18.0.0"
+      },
+      "warnings": [
+        {
+          "condition": "svelte<5",
+          "message": "Svelte 5 introduces runes and significant breaking changes from Svelte 4",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "package": "express",
+      "version": "^5.0.0",
+      "requires": {
+        "node": ">=18.0.0"
+      },
+      "warnings": [
+        {
+          "condition": "express<5",
+          "message": "Express 5 has breaking changes. Review migration guide before upgrading from Express 4",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "package": "fastify",
+      "version": "^4.0.0",
+      "requires": {
+        "node": ">=14.6.0"
+      }
+    },
+    {
+      "package": "@nestjs/core",
+      "version": "^10.0.0",
+      "incompatibleWith": [
+        {
+          "package": "@nestjs/common",
+          "versionRange": "<10.0.0",
+          "reason": "NestJS core and common packages should use the same major version",
+          "severity": "error",
+          "fix": "npm install @nestjs/common@^10.0.0"
+        }
+      ],
+      "requires": {
+        "node": ">=16.0.0"
+      }
+    },
+    {
+      "package": "prisma",
+      "version": "^5.0.0",
+      "incompatibleWith": [
+        {
+          "package": "@prisma/client",
+          "versionRange": "<5.0.0",
+          "reason": "Prisma CLI and client should use the same version",
+          "severity": "error",
+          "fix": "npm install @prisma/client@^5.0.0"
+        }
+      ],
+      "requires": {
+        "node": ">=16.13.0"
+      }
+    },
+    {
+      "package": "esbuild",
+      "version": "^0.20.0",
+      "requires": {
+        "node": ">=18.0.0"
+      }
+    },
+    {
+      "package": "rollup",
+      "version": "^4.0.0",
+      "requires": {
+        "node": ">=18.0.0"
+      }
+    },
+    {
+      "package": "solid-js",
+      "version": "^1.8.0",
+      "requires": {
+        "node": ">=14.0.0"
+      }
+    },
+    {
+      "package": "nix",
+      "version": ">=2.0.0",
+      "requires": {
+        "system": "Linux, macOS"
+      },
+      "warnings": [
+        {
+          "condition": "nix<2.4.0",
+          "message": "Nix 2.4+ introduces flakes and improved CLI. Consider upgrading for modern Nix features",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "package": "nixpkgs",
+      "version": "unstable",
+      "warnings": [
+        {
+          "condition": "always",
+          "message": "Using nixpkgs-unstable provides latest packages but may have breaking changes. Consider using stable channel for production",
+          "severity": "info"
+        }
+      ]
     }
   ],
   "deprecated": [
@@ -217,24 +664,30 @@
       "14": {
         "eolDate": "2023-04-30",
         "status": "end-of-life",
-        "message": "Node.js 14 has reached end-of-life. Upgrade to Node.js 18 or 20 (LTS)",
-        "severity": "warning"
+        "message": "Node.js 14 has reached end-of-life. Upgrade to Node.js 20 or 22 (LTS)",
+        "severity": "error"
       },
       "16": {
         "eolDate": "2023-09-11",
         "status": "end-of-life",
-        "message": "Node.js 16 has reached end-of-life. Upgrade to Node.js 18 or 20 (LTS)",
-        "severity": "warning"
+        "message": "Node.js 16 has reached end-of-life. Upgrade to Node.js 20 or 22 (LTS)",
+        "severity": "error"
       },
       "18": {
-        "status": "lts",
+        "status": "maintenance",
         "eolDate": "2025-04-30",
-        "message": "Node.js 18 LTS - Active support"
+        "message": "Node.js 18 enters maintenance mode soon (EOL April 2025). Consider upgrading to Node.js 20 or 22 (LTS)",
+        "severity": "warning"
       },
       "20": {
         "status": "lts",
         "eolDate": "2026-04-30",
-        "message": "Node.js 20 LTS - Active support"
+        "message": "Node.js 20 LTS - Active support until April 2026"
+      },
+      "22": {
+        "status": "lts",
+        "eolDate": "2027-04-30",
+        "message": "Node.js 22 LTS - Active support (recommended)"
       }
     }
   }
