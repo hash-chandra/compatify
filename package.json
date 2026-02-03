@@ -1,6 +1,6 @@
 {
   "name": "compatify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Node.js CLI tool to detect dependency compatibility issues in Node.js projects",
   "main": "src/index.js",
   "bin": {
