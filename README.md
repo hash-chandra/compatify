@@ -48,6 +48,17 @@ compatify check
 compatify scan /path/to/project
 ```
 
+### Check Remote GitHub Repository (New!)
+
+```bash
+compatify remote https://github.com/owner/repo
+```
+
+Supports various GitHub URL formats:
+- `https://github.com/owner/repo`
+- `https://github.com/owner/repo/tree/branch-name`
+- `https://github.com/owner/repo.git`
+
 ### Output as JSON
 
 ```bash

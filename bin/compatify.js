@@ -7,6 +7,7 @@ const path = require('node:path');
 const Table = require('cli-table3');
 
 const { checkCompatibility } = require('../src/index');
+const GitHubFetcher = require('../src/remote/githubFetcher');
 
 const program = new Command();
 
@@ -178,6 +179,33 @@ program
   .action(async (projectPath, options) => {
     const absolutePath = path.resolve(projectPath);
     await checkProject(absolutePath, options);
+  });
+
+// Remote command
+program
+  .command('remote <github-url>')
+  .description('Check compatibility issues in a remote GitHub repository')
+  .option('-v, --verbose', 'Show detailed output')
+  .option('-j, --json', 'Output results as JSON')
+  .action(async (githubUrl, options) => {
+    const spinner = ora('Fetching repository from GitHub...').start();
+    let tempDir = null;
+
+    try {
+      tempDir = await GitHubFetcher.downloadRepository(githubUrl);
+      spinner.text = 'Analyzing dependencies...';
+      await checkProject(tempDir, options);
+    } catch (error) {
+      spinner.fail(chalk.red(`Error: ${error.message}`));
+      if (options.verbose) {
+        console.error(error.stack);
+      }
+      process.exit(1);
+    } finally {
+      if (tempDir) {
+        await GitHubFetcher.cleanup(tempDir);
+      }
+    }
   });
 
 // Parse arguments
