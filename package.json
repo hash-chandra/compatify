@@ -1,7 +1,7 @@
 {
   "name": "compatify",
   "version": "1.0.2",
-  "description": "Universal dependency compatibility checker with plugin architecture - currently supports Node.js with Python, Ruby, and more coming soon",
+  "description": "Node.js dependency compatibility checker - detect version conflicts, peer dependency issues, and deprecated packages",
   "main": "src/index.js",
   "bin": {
     "compatify": "bin/compatify.js"
