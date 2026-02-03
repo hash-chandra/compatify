@@ -148,6 +148,9 @@ async function checkProject(projectPath, options, existingSpinner = null) {
       process.exit(1);
     }
 
+    // Exit successfully if no errors
+    process.exit(0);
+
   } catch (error) {
     spinner.fail(chalk.red(`Error: ${error.message}`));
 
@@ -195,22 +198,24 @@ program
       tempDir = await GitHubFetcher.downloadRepository(githubUrl);
       spinner.text = 'Analyzing dependencies...';
       await checkProject(tempDir, options, spinner);
-      
+
       // Cleanup temp directory
       if (tempDir) {
         await GitHubFetcher.cleanup(tempDir);
       }
+
+      // checkProject handles its own exit, but if we get here it means success
     } catch (error) {
       spinner.fail(chalk.red(`Error: ${error.message}`));
       if (options.verbose) {
         console.error(error.stack);
       }
-      
+
       // Cleanup on error
       if (tempDir) {
         await GitHubFetcher.cleanup(tempDir);
       }
-      
+
       process.exit(1);
     }
   });
