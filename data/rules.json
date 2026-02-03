@@ -1,0 +1,241 @@
+{
+  "rules": [
+    {
+      "package": "react",
+      "version": "^18.0.0",
+      "incompatibleWith": [
+        {
+          "package": "react-dom",
+          "versionRange": "<18.0.0",
+          "reason": "React 18 requires react-dom 18 or higher for concurrent features",
+          "severity": "error",
+          "fix": "npm install react-dom@^18.0.0"
+        }
+      ],
+      "requires": {
+        "node": ">=14.0.0"
+      }
+    },
+    {
+      "package": "react",
+      "version": "^17.0.0",
+      "incompatibleWith": [
+        {
+          "package": "react-dom",
+          "versionRange": "<17.0.0 || >=18.0.0",
+          "reason": "React 17 requires react-dom 17.x for proper rendering",
+          "severity": "error",
+          "fix": "npm install react-dom@^17.0.0"
+        }
+      ]
+    },
+    {
+      "package": "webpack",
+      "version": "^5.0.0",
+      "incompatibleWith": [
+        {
+          "package": "webpack-dev-server",
+          "versionRange": "<3.11.0",
+          "reason": "Webpack 5 requires webpack-dev-server 3.11.0 or higher",
+          "severity": "error",
+          "fix": "npm install webpack-dev-server@^4.0.0"
+        }
+      ],
+      "requires": {
+        "node": ">=10.13.0"
+      }
+    },
+    {
+      "package": "@babel/core",
+      "version": "^7.0.0",
+      "incompatibleWith": [
+        {
+          "package": "babel-loader",
+          "versionRange": "<8.0.0",
+          "reason": "Babel 7 requires babel-loader 8 or higher",
+          "severity": "error",
+          "fix": "npm install babel-loader@^8.0.0"
+        }
+      ]
+    },
+    {
+      "package": "eslint",
+      "version": "^8.0.0",
+      "incompatibleWith": [
+        {
+          "package": "eslint-plugin-react",
+          "versionRange": "<7.28.0",
+          "reason": "ESLint 8 requires eslint-plugin-react 7.28.0 or higher",
+          "severity": "warning",
+          "fix": "npm install eslint-plugin-react@^7.28.0"
+        }
+      ],
+      "requires": {
+        "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+      }
+    },
+    {
+      "package": "typescript",
+      "version": "^5.0.0",
+      "requires": {
+        "node": ">=14.17"
+      },
+      "warnings": [
+        {
+          "condition": "node<16.0.0",
+          "message": "TypeScript 5.0+ works best with Node.js 16 or higher",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "package": "jest",
+      "version": "^29.0.0",
+      "requires": {
+        "node": "^14.15.0 || ^16.10.0 || >=18.0.0"
+      },
+      "incompatibleWith": [
+        {
+          "package": "ts-jest",
+          "versionRange": "<29.0.0",
+          "reason": "Jest 29 requires ts-jest 29 or higher for TypeScript support",
+          "severity": "error",
+          "fix": "npm install ts-jest@^29.0.0"
+        }
+      ]
+    },
+    {
+      "package": "vue",
+      "version": "^3.0.0",
+      "incompatibleWith": [
+        {
+          "package": "vue-router",
+          "versionRange": "<4.0.0",
+          "reason": "Vue 3 requires vue-router 4 or higher",
+          "severity": "error",
+          "fix": "npm install vue-router@^4.0.0"
+        },
+        {
+          "package": "vuex",
+          "versionRange": "<4.0.0",
+          "reason": "Vue 3 requires Vuex 4 or higher",
+          "severity": "error",
+          "fix": "npm install vuex@^4.0.0"
+        }
+      ]
+    },
+    {
+      "package": "next",
+      "version": "^13.0.0",
+      "incompatibleWith": [
+        {
+          "package": "react",
+          "versionRange": "<18.2.0",
+          "reason": "Next.js 13 requires React 18.2.0 or higher",
+          "severity": "error",
+          "fix": "npm install react@^18.2.0 react-dom@^18.2.0"
+        }
+      ],
+      "requires": {
+        "node": ">=14.6.0"
+      }
+    },
+    {
+      "package": "@angular/core",
+      "version": "^15.0.0",
+      "incompatibleWith": [
+        {
+          "package": "@angular/cli",
+          "versionRange": "<15.0.0",
+          "reason": "Angular 15 requires Angular CLI 15 or higher",
+          "severity": "error",
+          "fix": "npm install @angular/cli@^15.0.0"
+        }
+      ],
+      "requires": {
+        "node": "^14.20.0 || ^16.13.0 || >=18.10.0"
+      }
+    }
+  ],
+  "deprecated": [
+    {
+      "package": "node-sass",
+      "reason": "node-sass is deprecated. Use 'sass' (Dart Sass) instead",
+      "severity": "warning",
+      "replacement": "sass",
+      "fix": "npm install sass && npm uninstall node-sass"
+    },
+    {
+      "package": "babel-preset-es2015",
+      "reason": "Deprecated in favor of @babel/preset-env",
+      "severity": "warning",
+      "replacement": "@babel/preset-env",
+      "fix": "npm install @babel/preset-env && npm uninstall babel-preset-es2015"
+    },
+    {
+      "package": "request",
+      "reason": "request has been deprecated. Use 'node-fetch' or 'axios' instead",
+      "severity": "warning",
+      "replacement": "node-fetch or axios",
+      "fix": "npm install axios"
+    },
+    {
+      "package": "gulp-util",
+      "reason": "gulp-util is deprecated. Use individual packages instead",
+      "severity": "warning",
+      "replacement": "individual gulp utilities"
+    }
+  ],
+  "esm": [
+    {
+      "package": "chalk",
+      "version": ">=5.0.0",
+      "type": "esm-only",
+      "message": "chalk 5.x is pure ESM. Use chalk 4.x for CommonJS projects or migrate to ESM",
+      "severity": "error",
+      "compatibleVersion": "^4.1.2"
+    },
+    {
+      "package": "node-fetch",
+      "version": ">=3.0.0",
+      "type": "esm-only",
+      "message": "node-fetch 3.x is pure ESM. Use node-fetch 2.x for CommonJS projects",
+      "severity": "error",
+      "compatibleVersion": "^2.6.7"
+    },
+    {
+      "package": "execa",
+      "version": ">=6.0.0",
+      "type": "esm-only",
+      "message": "execa 6.x is pure ESM. Use execa 5.x for CommonJS projects",
+      "severity": "error",
+      "compatibleVersion": "^5.1.1"
+    }
+  ],
+  "engineRequirements": {
+    "node": {
+      "14": {
+        "eolDate": "2023-04-30",
+        "status": "end-of-life",
+        "message": "Node.js 14 has reached end-of-life. Upgrade to Node.js 18 or 20 (LTS)",
+        "severity": "warning"
+      },
+      "16": {
+        "eolDate": "2023-09-11",
+        "status": "end-of-life",
+        "message": "Node.js 16 has reached end-of-life. Upgrade to Node.js 18 or 20 (LTS)",
+        "severity": "warning"
+      },
+      "18": {
+        "status": "lts",
+        "eolDate": "2025-04-30",
+        "message": "Node.js 18 LTS - Active support"
+      },
+      "20": {
+        "status": "lts",
+        "eolDate": "2026-04-30",
+        "message": "Node.js 20 LTS - Active support"
+      }
+    }
+  }
+}

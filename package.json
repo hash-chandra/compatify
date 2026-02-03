@@ -1,0 +1,56 @@
+{
+  "name": "compatify",
+  "version": "1.0.0",
+  "description": "A Node.js CLI tool to detect dependency compatibility issues in Node.js projects",
+  "main": "src/index.js",
+  "bin": {
+    "compatify": "./bin/compatify.js"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/ test/",
+    "lint:fix": "eslint src/ test/ --fix",
+    "start": "node bin/compatify.js"
+  },
+  "keywords": [
+    "compatibility",
+    "dependencies",
+    "npm",
+    "nodejs",
+    "package-manager",
+    "version-conflict",
+    "peer-dependencies",
+    "compatibility-checker",
+    "dependency-analyzer"
+  ],
+  "author": "chanagonda",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chanagonda/compatify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chanagonda/compatify/issues"
+  },
+  "homepage": "https://github.com/chanagonda/compatify#readme",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "cli-table3": "^0.6.3",
+    "commander": "^11.1.0",
+    "cosmiconfig": "^9.0.0",
+    "ora": "^5.4.1",
+    "pacote": "^17.0.4",
+    "semver": "^7.5.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "jest": "^29.7.0",
+    "mock-fs": "^5.2.0"
+  }
+}

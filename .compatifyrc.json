@@ -1,0 +1,12 @@
+{
+  "compatify": {
+    "ignore": [],
+    "severity": {
+      "deprecated": "warning",
+      "peerDependency": "error",
+      "engineMismatch": "warning"
+    },
+    "cache": true,
+    "cacheTTL": 86400
+  }
+}
