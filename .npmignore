@@ -1,0 +1,66 @@
+# Test files
+test/
+*.test.js
+*.spec.js
+coverage/
+.nyc_output/
+
+# Examples and documentation sources
+examples/
+docs/CONTRIBUTING.md
+docs/QUICK_REFERENCE.md
+scripts/verify-setup.sh
+
+# Development files
+.github/
+.vscode/
+.idea/
+.editorconfig
+.eslintrc.js
+.eslintignore
+.prettierrc
+.prettierignore
+jest.config.js
+.compatifyrc.json
+
+# Git files
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.travis.yml
+.circleci/
+.gitlab-ci.yml
+azure-pipelines.yml
+
+# Environment files
+.env*
+!.env.example
+
+# IDE
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary
+tmp/
+temp/
+*.tmp
+
+# Lock files (users should generate their own)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Cache
+.eslintcache
+.compatify-cache/

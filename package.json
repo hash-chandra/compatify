@@ -6,13 +6,22 @@
   "bin": {
     "compatify": "bin/compatify.js"
   },
+  "files": [
+    "bin/",
+    "src/",
+    "data/",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lint": "eslint src/ test/",
     "lint:fix": "eslint src/ test/ --fix",
-    "start": "node bin/compatify.js"
+    "start": "node bin/compatify.js",
+    "prepublishOnly": "npm test && npm run lint"
   },
   "keywords": [
     "compatibility",
@@ -23,7 +32,10 @@
     "version-conflict",
     "peer-dependencies",
     "compatibility-checker",
-    "dependency-analyzer"
+    "dependency-analyzer",
+    "node-version",
+    "package-compatibility",
+    "dependency-check"
   ],
   "author": "hash-chandra",
   "license": "MIT",
