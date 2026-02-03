@@ -79,15 +79,27 @@ class GitHubFetcher {
     const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'compatify-remote-'));
 
     try {
-      // Fetch package.json
-      const packageJsonContent = await this.fetchRawFile(owner, repo, branch, 'package.json');
-      if (!packageJsonContent) {
-        throw new Error('package.json not found in repository');
+      // Try multiple branch names if main doesn't work
+      const branches = [branch, 'main', 'master', 'develop'];
+      let packageJsonContent = null;
+      let foundBranch = null;
+
+      for (const tryBranch of branches) {
+        packageJsonContent = await this.fetchRawFile(owner, repo, tryBranch, 'package.json');
+        if (packageJsonContent) {
+          foundBranch = tryBranch;
+          break;
+        }
       }
+
+      if (!packageJsonContent) {
+        throw new Error(`package.json not found in repository. Tried branches: ${branches.join(', ')}`);
+      }
+
       await fs.writeFile(path.join(tempDir, 'package.json'), packageJsonContent);
 
       // Try to fetch package-lock.json
-      const packageLockContent = await this.fetchRawFile(owner, repo, branch, 'package-lock.json');
+      const packageLockContent = await this.fetchRawFile(owner, repo, foundBranch, 'package-lock.json');
       if (packageLockContent) {
         await fs.writeFile(path.join(tempDir, 'package-lock.json'), packageLockContent);
       }
