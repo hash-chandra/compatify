@@ -97,6 +97,6 @@ console.log(result.summary);
 
 ## Getting Help
 
-- 📖 [Documentation](https://github.com/chanagonda/compatify)
-- 🐛 [Report Bug](https://github.com/chanagonda/compatify/issues)
-- 💬 [Discussions](https://github.com/chanagonda/compatify/discussions)
+- 📖 [Documentation](https://github.com/hash-chandra/compatify)
+- 🐛 [Report Bug](https://github.com/hash-chandra/compatify/issues)
+- 💬 [Discussions](https://github.com/hash-chandra/compatify/discussions)

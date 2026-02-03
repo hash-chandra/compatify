@@ -125,7 +125,7 @@ To contribute a new compatibility rule, add it to `data/rules.json`:
 
 ## 📝 License
 
-MIT © chanagonda
+MIT © hash-chandra
 
 ## 🙏 Acknowledgments
 
@@ -137,6 +137,6 @@ Built with:
 
 ## 📮 Support
 
-- 🐛 [Report a bug](https://github.com/chanagonda/compatify/issues)
-- 💬 [Ask a question](https://github.com/chanagonda/compatify/discussions)
+- 🐛 [Report a bug](https://github.com/hash-chandra/compatify/issues)
+- 💬 [Ask a question](https://github.com/hash-chandra/compatify/discussions)
 - ⭐ Star this project on GitHub!

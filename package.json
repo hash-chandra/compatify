@@ -25,16 +25,16 @@
     "compatibility-checker",
     "dependency-analyzer"
   ],
-  "author": "chanagonda",
+  "author": "hash-chandra",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chanagonda/compatify.git"
+    "url": "https://github.com/hash-chandra/compatify.git"
   },
   "bugs": {
-    "url": "https://github.com/chanagonda/compatify/issues"
+    "url": "https://github.com/hash-chandra/compatify/issues"
   },
-  "homepage": "https://github.com/chanagonda/compatify#readme",
+  "homepage": "https://github.com/hash-chandra/compatify#readme",
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=6.0.0"

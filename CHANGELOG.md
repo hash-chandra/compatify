@@ -82,4 +82,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - License compatibility checking
 - Bundle size impact analysis
 
-[1.0.0]: https://github.com/chanagonda/compatify/releases/tag/v1.0.0
+[1.0.0]: https://github.com/hash-chandra/compatify/releases/tag/v1.0.0

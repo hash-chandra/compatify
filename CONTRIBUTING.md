@@ -245,7 +245,7 @@ npm publish
 
 ## Need Help?
 
-- 💬 [Join Discussions](https://github.com/chanagonda/compatify/discussions)
+- 💬 [Join Discussions](https://github.com/hash-chandra/compatify/discussions)
 - 📧 Email: your-email@example.com
 - 🐦 Twitter: @yourhandle
 

@@ -230,9 +230,9 @@ rm -rf ~/.compatify-cache
 
 ## Getting Help
 
-- 📖 [Full Documentation](https://github.com/chanagonda/compatify)
-- 🐛 [Report Issues](https://github.com/chanagonda/compatify/issues)
-- 💬 [Discussions](https://github.com/chanagonda/compatify/discussions)
+- 📖 [Full Documentation](https://github.com/hash-chandra/compatify)
+- 🐛 [Report Issues](https://github.com/hash-chandra/compatify/issues)
+- 💬 [Discussions](https://github.com/hash-chandra/compatify/discussions)
 
 ## Contributing
 
