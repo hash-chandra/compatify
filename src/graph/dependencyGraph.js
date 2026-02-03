@@ -35,7 +35,7 @@ class DependencyGraph {
     if (!this.edges.has(from)) {
       this.edges.set(from, []);
     }
-    
+
     this.edges.get(from).push({
       to,
       versionRange
@@ -49,7 +49,7 @@ class DependencyGraph {
    */
   static buildFromProject(projectData) {
     const graph = new DependencyGraph();
-    
+
     // Add root project node
     graph.addNode('__root__', {
       version: projectData.metadata.version,
@@ -96,13 +96,13 @@ class DependencyGraph {
    */
   getDependents(packageName) {
     const dependents = [];
-    
+
     for (const [from, edges] of this.edges) {
       if (edges.some(edge => edge.to === packageName)) {
         dependents.push(from);
       }
     }
-    
+
     return dependents;
   }
 
@@ -135,14 +135,18 @@ class DependencyGraph {
     const visited = new Set();
 
     const dfs = (current, path, depth) => {
-      if (depth > maxDepth) return;
-      
+      if (depth > maxDepth) {
+        return;
+      }
+
       if (current === to) {
         paths.push([...path, current]);
         return;
       }
 
-      if (visited.has(current)) return;
+      if (visited.has(current)) {
+        return;
+      }
       visited.add(current);
 
       const deps = this.getDependencies(current);
@@ -164,16 +168,20 @@ class DependencyGraph {
   getStats() {
     const packages = this.getAllPackages();
     const totalDeps = packages.length;
-    
+
     let directDeps = 0;
     let devDeps = 0;
     let optionalDeps = 0;
-    
+
     for (const pkg of packages) {
       const node = this.getNode(pkg);
       if (node) {
-        if (node.dev) devDeps++;
-        if (node.optional) optionalDeps++;
+        if (node.dev) {
+          devDeps++;
+        }
+        if (node.optional) {
+          optionalDeps++;
+        }
       }
     }
 

@@ -21,7 +21,7 @@ describe('CompatibilityChecker', () => {
       });
 
       checker.checkPeerDependencies(graph);
-      
+
       expect(checker.issues).toHaveLength(1);
       expect(checker.issues[0].type).toBe('missing-peer-dependency');
       expect(checker.issues[0].severity).toBe('error');
@@ -35,7 +35,7 @@ describe('CompatibilityChecker', () => {
       });
 
       checker.checkPeerDependencies(graph);
-      
+
       expect(checker.issues).toHaveLength(1);
       expect(checker.issues[0].type).toBe('peer-dependency-mismatch');
       expect(checker.issues[0].installedVersion).toBe('17.0.0');
@@ -49,7 +49,7 @@ describe('CompatibilityChecker', () => {
       });
 
       checker.checkPeerDependencies(graph);
-      
+
       expect(checker.issues).toHaveLength(0);
     });
   });
@@ -60,7 +60,7 @@ describe('CompatibilityChecker', () => {
       graph.addNode('react-dom', { version: '17.0.0' });
 
       checker.checkVersionIncompatibilities(graph);
-      
+
       const incompatIssues = checker.issues.filter(i => i.type === 'version-incompatibility');
       expect(incompatIssues.length).toBeGreaterThan(0);
       expect(incompatIssues[0].severity).toBe('error');
@@ -71,7 +71,7 @@ describe('CompatibilityChecker', () => {
       graph.addNode('react-dom', { version: '18.0.0' });
 
       checker.checkVersionIncompatibilities(graph);
-      
+
       const incompatIssues = checker.issues.filter(i => i.type === 'version-incompatibility');
       expect(incompatIssues).toHaveLength(0);
     });
@@ -82,7 +82,7 @@ describe('CompatibilityChecker', () => {
       graph.addNode('node-sass', { version: '6.0.0' });
 
       checker.checkDeprecatedPackages(graph);
-      
+
       const deprecatedIssues = checker.issues.filter(i => i.type === 'deprecated-package');
       expect(deprecatedIssues).toHaveLength(1);
       expect(deprecatedIssues[0].package).toBe('node-sass');
@@ -96,7 +96,7 @@ describe('CompatibilityChecker', () => {
 
       const projectMetadata = { type: 'commonjs' };
       checker.checkESMCompatibility(graph, projectMetadata);
-      
+
       const esmIssues = checker.issues.filter(i => i.type === 'esm-commonjs-conflict');
       expect(esmIssues).toHaveLength(1);
       expect(esmIssues[0].severity).toBe('error');
@@ -107,7 +107,7 @@ describe('CompatibilityChecker', () => {
 
       const projectMetadata = { type: 'module' };
       checker.checkESMCompatibility(graph, projectMetadata);
-      
+
       const esmIssues = checker.issues.filter(i => i.type === 'esm-commonjs-conflict');
       expect(esmIssues).toHaveLength(0);
     });
@@ -121,13 +121,13 @@ describe('CompatibilityChecker', () => {
       });
 
       const projectMetadata = { engines: {} };
-      
+
       // Mock process.version to simulate older Node
       const originalVersion = process.version;
       Object.defineProperty(process, 'version', { value: 'v16.0.0' });
 
       checker.checkEngineRequirements(graph, projectMetadata);
-      
+
       const engineIssues = checker.issues.filter(i => i.type === 'engine-mismatch');
       expect(engineIssues.length).toBeGreaterThan(0);
 
@@ -145,7 +145,7 @@ describe('CompatibilityChecker', () => {
       ];
 
       const summary = checker.getSummary();
-      
+
       expect(summary.total).toBe(3);
       expect(summary.errors).toBe(2);
       expect(summary.warnings).toBe(1);
@@ -164,7 +164,7 @@ describe('CompatibilityChecker', () => {
       ];
 
       const grouped = checker.getIssuesBySeverity();
-      
+
       expect(grouped.error).toHaveLength(2);
       expect(grouped.warning).toHaveLength(1);
       expect(grouped.info).toHaveLength(0);

@@ -16,7 +16,7 @@ describe('DependencyGraph', () => {
       };
 
       graph.addNode('test-package', metadata);
-      
+
       const node = graph.getNode('test-package');
       expect(node).toBeDefined();
       expect(node.name).toBe('test-package');
@@ -34,9 +34,9 @@ describe('DependencyGraph', () => {
     test('should add and retrieve edges', () => {
       graph.addNode('pkg-a', { version: '1.0.0' });
       graph.addNode('pkg-b', { version: '2.0.0' });
-      
+
       graph.addEdge('pkg-a', 'pkg-b', '^2.0.0');
-      
+
       const deps = graph.getDependencies('pkg-a');
       expect(deps).toHaveLength(1);
       expect(deps[0].to).toBe('pkg-b');
@@ -47,10 +47,10 @@ describe('DependencyGraph', () => {
       graph.addNode('pkg-a', { version: '1.0.0' });
       graph.addNode('pkg-b', { version: '2.0.0' });
       graph.addNode('pkg-c', { version: '3.0.0' });
-      
+
       graph.addEdge('pkg-a', 'pkg-b', '^2.0.0');
       graph.addEdge('pkg-a', 'pkg-c', '^3.0.0');
-      
+
       const deps = graph.getDependencies('pkg-a');
       expect(deps).toHaveLength(2);
     });
@@ -61,10 +61,10 @@ describe('DependencyGraph', () => {
       graph.addNode('pkg-a', { version: '1.0.0' });
       graph.addNode('pkg-b', { version: '2.0.0' });
       graph.addNode('pkg-c', { version: '3.0.0' });
-      
+
       graph.addEdge('pkg-a', 'pkg-c', '^3.0.0');
       graph.addEdge('pkg-b', 'pkg-c', '^3.0.0');
-      
+
       const dependents = graph.getDependents('pkg-c');
       expect(dependents).toHaveLength(2);
       expect(dependents).toContain('pkg-a');
@@ -77,7 +77,7 @@ describe('DependencyGraph', () => {
       graph.addNode('__root__', { version: '1.0.0' });
       graph.addNode('pkg-a', { version: '1.0.0' });
       graph.addNode('pkg-b', { version: '2.0.0' });
-      
+
       const packages = graph.getAllPackages();
       expect(packages).toHaveLength(2);
       expect(packages).toContain('pkg-a');
@@ -115,7 +115,7 @@ describe('DependencyGraph', () => {
       };
 
       const graph = DependencyGraph.buildFromProject(projectData);
-      
+
       expect(graph.getNode('react')).toBeDefined();
       expect(graph.getNode('react-dom')).toBeDefined();
       expect(graph.getDependencies('__root__')).toHaveLength(2);
@@ -145,7 +145,7 @@ describe('DependencyGraph', () => {
 
       const graph = DependencyGraph.buildFromProject(projectData);
       const stats = graph.getStats();
-      
+
       expect(stats.totalPackages).toBe(3);
       expect(stats.directDependencies).toBe(2);
       expect(stats.transitiveDependencies).toBe(1);
@@ -157,10 +157,10 @@ describe('DependencyGraph', () => {
       graph.addNode('pkg-a', { version: '1.0.0' });
       graph.addNode('pkg-b', { version: '2.0.0' });
       graph.addNode('pkg-c', { version: '3.0.0' });
-      
+
       graph.addEdge('pkg-a', 'pkg-b', '^2.0.0');
       graph.addEdge('pkg-b', 'pkg-c', '^3.0.0');
-      
+
       const paths = graph.findPaths('pkg-a', 'pkg-c');
       expect(paths).toHaveLength(1);
       expect(paths[0]).toEqual(['pkg-a', 'pkg-b', 'pkg-c']);
@@ -169,7 +169,7 @@ describe('DependencyGraph', () => {
     test('should return empty array if no path exists', () => {
       graph.addNode('pkg-a', { version: '1.0.0' });
       graph.addNode('pkg-b', { version: '2.0.0' });
-      
+
       const paths = graph.findPaths('pkg-a', 'pkg-b');
       expect(paths).toHaveLength(0);
     });

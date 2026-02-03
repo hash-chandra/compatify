@@ -97,7 +97,7 @@ describe('PackageParser', () => {
       };
 
       const result = parser.extractDependencies(packageJson);
-      
+
       expect(result.dependencies['pkg-a']).toBe('1.0.0');
       expect(result.devDependencies['pkg-b']).toBe('2.0.0');
       expect(result.peerDependencies['pkg-c']).toBe('3.0.0');
@@ -109,7 +109,7 @@ describe('PackageParser', () => {
     test('should handle missing dependency sections', () => {
       const packageJson = {};
       const result = parser.extractDependencies(packageJson);
-      
+
       expect(result.dependencies).toEqual({});
       expect(result.devDependencies).toEqual({});
       expect(result.all).toEqual({});
@@ -133,7 +133,7 @@ describe('PackageParser', () => {
       };
 
       const result = parser.extractInstalledPackages(packageLock);
-      
+
       expect(result.has('react')).toBe(true);
       expect(result.get('react').version).toBe('18.0.0');
       expect(result.get('react').engines.node).toBe('>=14.0.0');
@@ -155,7 +155,7 @@ describe('PackageParser', () => {
       };
 
       const result = parser.extractProjectMetadata(packageJson);
-      
+
       expect(result.name).toBe('my-project');
       expect(result.version).toBe('2.0.0');
       expect(result.engines.node).toBe('>=16.0.0');
@@ -165,7 +165,7 @@ describe('PackageParser', () => {
     test('should use defaults for missing fields', () => {
       const packageJson = {};
       const result = parser.extractProjectMetadata(packageJson);
-      
+
       expect(result.name).toBe('unknown');
       expect(result.version).toBe('0.0.0');
       expect(result.type).toBe('commonjs');

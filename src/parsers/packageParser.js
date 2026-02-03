@@ -78,11 +78,13 @@ class PackageParser {
     if (packageLock.packages) {
       for (const [pkgPath, metadata] of Object.entries(packageLock.packages)) {
         // Skip root package (empty string key)
-        if (pkgPath === '') continue;
+        if (pkgPath === '') {
+          continue;
+        }
 
         // Extract package name from path (remove node_modules/ prefix)
         const packageName = pkgPath.replace(/^node_modules\//, '');
-        
+
         packages.set(packageName, {
           version: metadata.version,
           resolved: metadata.resolved,
@@ -94,9 +96,8 @@ class PackageParser {
           dev: metadata.dev || false
         });
       }
-    }
-    // Handle npm v1 (lockfileVersion 1) - legacy format
-    else if (packageLock.dependencies) {
+    } else if (packageLock.dependencies) {
+      // Handle npm v1 (lockfileVersion 1) - legacy format
       this._extractLegacyDependencies(packageLock.dependencies, packages);
     }
 
@@ -110,7 +111,7 @@ class PackageParser {
   _extractLegacyDependencies(dependencies, packages, prefix = '') {
     for (const [name, metadata] of Object.entries(dependencies)) {
       const fullName = prefix ? `${prefix}/node_modules/${name}` : name;
-      
+
       packages.set(fullName, {
         version: metadata.version,
         resolved: metadata.resolved,
@@ -152,7 +153,7 @@ class PackageParser {
   async parseProject(projectPath) {
     const packageJson = await this.parsePackageJson(projectPath);
     const packageLock = await this.parsePackageLock(projectPath);
-    
+
     return {
       metadata: this.extractProjectMetadata(packageJson),
       dependencies: this.extractDependencies(packageJson),

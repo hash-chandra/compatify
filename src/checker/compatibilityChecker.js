@@ -62,11 +62,13 @@ class CompatibilityChecker {
   checkPeerDependencies(graph) {
     for (const packageName of graph.getAllPackages()) {
       const node = graph.getNode(packageName);
-      if (!node || !node.peerDependencies) continue;
+      if (!node || !node.peerDependencies) {
+        continue;
+      }
 
       for (const [peerName, peerRange] of Object.entries(node.peerDependencies)) {
         const peerNode = graph.getNode(peerName);
-        
+
         if (!peerNode) {
           this.issues.push({
             type: 'missing-peer-dependency',
@@ -101,20 +103,28 @@ class CompatibilityChecker {
    * @private
    */
   checkVersionIncompatibilities(graph) {
-    if (!this.rules.rules) return;
+    if (!this.rules.rules) {
+      return;
+    }
 
     for (const rule of this.rules.rules) {
       const node = graph.getNode(rule.package);
-      if (!node) continue;
+      if (!node) {
+        continue;
+      }
 
       // Check if package version matches rule version
-      if (!semver.satisfies(node.version, rule.version)) continue;
+      if (!semver.satisfies(node.version, rule.version)) {
+        continue;
+      }
 
       // Check incompatibilities
       if (rule.incompatibleWith) {
         for (const incompatibility of rule.incompatibleWith) {
           const incompatNode = graph.getNode(incompatibility.package);
-          if (!incompatNode) continue;
+          if (!incompatNode) {
+            continue;
+          }
 
           if (semver.satisfies(incompatNode.version, incompatibility.versionRange)) {
             this.issues.push({
@@ -154,11 +164,15 @@ class CompatibilityChecker {
    * @private
    */
   checkDeprecatedPackages(graph) {
-    if (!this.rules.deprecated) return;
+    if (!this.rules.deprecated) {
+      return;
+    }
 
     for (const deprecation of this.rules.deprecated) {
       const node = graph.getNode(deprecation.package);
-      if (!node) continue;
+      if (!node) {
+        continue;
+      }
 
       this.issues.push({
         type: 'deprecated-package',
@@ -177,16 +191,22 @@ class CompatibilityChecker {
    * @private
    */
   checkESMCompatibility(graph, projectMetadata) {
-    if (!this.rules.esm) return;
+    if (!this.rules.esm) {
+      return;
+    }
 
     const projectType = projectMetadata.type || 'commonjs';
 
     // Only check if project is CommonJS
-    if (projectType !== 'commonjs') return;
+    if (projectType !== 'commonjs') {
+      return;
+    }
 
     for (const esmRule of this.rules.esm) {
       const node = graph.getNode(esmRule.package);
-      if (!node) continue;
+      if (!node) {
+        continue;
+      }
 
       if (semver.satisfies(node.version, esmRule.version)) {
         this.issues.push({
@@ -226,7 +246,9 @@ class CompatibilityChecker {
     // Check each package's engine requirements
     for (const packageName of graph.getAllPackages()) {
       const node = graph.getNode(packageName);
-      if (!node || !node.engines || !node.engines.node) continue;
+      if (!node || !node.engines || !node.engines.node) {
+        continue;
+      }
 
       if (!semver.satisfies(currentNodeVersion, node.engines.node)) {
         this.issues.push({
@@ -265,7 +287,9 @@ class CompatibilityChecker {
   _evaluateCondition(condition) {
     // Simple regex to parse conditions like "node<16.0.0"
     const match = condition.match(/^node([<>=!]+)(.+)$/);
-    if (!match) return false;
+    if (!match) {
+      return false;
+    }
 
     const operator = match[1];
     const version = match[2];
@@ -305,7 +329,7 @@ class CompatibilityChecker {
    */
   getSummary() {
     const bySeverity = this.getIssuesBySeverity();
-    
+
     return {
       total: this.issues.length,
       errors: bySeverity.error.length,

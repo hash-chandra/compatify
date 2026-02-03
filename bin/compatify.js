@@ -59,11 +59,13 @@ function displayIssuesTable(issues) {
  */
 function displayFixes(issues) {
   const fixableIssues = issues.filter(i => i.fix);
-  
-  if (fixableIssues.length === 0) return;
+
+  if (fixableIssues.length === 0) {
+    return;
+  }
 
   console.log(chalk.bold('\n💡 Suggested fixes:\n'));
-  
+
   const uniqueFixes = [...new Set(fixableIssues.map(i => i.fix))];
   uniqueFixes.forEach(fix => {
     console.log(chalk.cyan('  • ') + fix);
@@ -79,7 +81,7 @@ function displaySummary(summary, projectPath) {
   console.log(`  Total issues: ${summary.total}`);
   console.log(`  ${chalk.red('Errors')}: ${summary.errors}`);
   console.log(`  ${chalk.yellow('Warnings')}: ${summary.warnings}`);
-  
+
   if (summary.info > 0) {
     console.log(`  ${chalk.blue('Info')}: ${summary.info}`);
   }
@@ -116,11 +118,11 @@ async function checkProject(projectPath, options) {
       }, null, 2));
     } else {
       console.log(chalk.bold(`\n🔍 Analyzing Node.js project: ${projectPath}\n`));
-      
+
       if (issues.length > 0) {
         const errorCount = summary.errors;
         const warningCount = summary.warnings;
-        
+
         if (errorCount > 0) {
           console.log(chalk.red(`✖ Found ${errorCount} error${errorCount !== 1 ? 's' : ''}`));
         }
@@ -147,11 +149,11 @@ async function checkProject(projectPath, options) {
 
   } catch (error) {
     spinner.fail(chalk.red(`Error: ${error.message}`));
-    
+
     if (options.verbose) {
       console.error(error.stack);
     }
-    
+
     process.exit(1);
   }
 }

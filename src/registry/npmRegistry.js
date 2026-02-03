@@ -17,7 +17,9 @@ class NpmRegistry {
    * Initialize cache directory
    */
   async initCache() {
-    if (!this.useCache) return;
+    if (!this.useCache) {
+      return;
+    }
 
     try {
       await fs.mkdir(this.cacheDir, { recursive: true });
@@ -41,7 +43,9 @@ class NpmRegistry {
    * @private
    */
   async _isCacheValid(cachePath) {
-    if (!this.useCache) return false;
+    if (!this.useCache) {
+      return false;
+    }
 
     try {
       const stats = await fs.stat(cachePath);
@@ -70,7 +74,9 @@ class NpmRegistry {
    * @private
    */
   async _writeCache(cachePath, data) {
-    if (!this.useCache) return;
+    if (!this.useCache) {
+      return;
+    }
 
     try {
       await fs.writeFile(cachePath, JSON.stringify(data, null, 2), 'utf8');
@@ -101,7 +107,7 @@ class NpmRegistry {
     // Fetch from registry
     try {
       const manifest = await pacote.manifest(`${packageName}@${version}`);
-      
+
       const data = {
         name: manifest.name,
         version: manifest.version,
@@ -162,7 +168,7 @@ class NpmRegistry {
    */
   async fetchMultiplePackages(packages) {
     const results = new Map();
-    
+
     const promises = packages.map(async ({ name, version }) => {
       try {
         const manifest = await this.fetchPackageManifest(name, version);
@@ -181,14 +187,16 @@ class NpmRegistry {
    * @param {string|null} packageName - Package name or null for all
    */
   async clearCache(packageName = null) {
-    if (!this.useCache) return;
+    if (!this.useCache) {
+      return;
+    }
 
     try {
       if (packageName) {
         const safeName = packageName.replaceAll('/', '-');
         const files = await fs.readdir(this.cacheDir);
         const toDelete = files.filter(f => f.startsWith(safeName));
-        
+
         await Promise.all(
           toDelete.map(f => fs.unlink(path.join(this.cacheDir, f)))
         );
