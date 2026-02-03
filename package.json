@@ -1,6 +1,6 @@
 {
   "name": "compatify",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Node.js dependency compatibility checker - detect version conflicts, peer dependency issues, and deprecated packages",
   "main": "src/index.js",
   "bin": {
