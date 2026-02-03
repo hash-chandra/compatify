@@ -6,16 +6,14 @@ const ora = require('ora');
 const path = require('path');
 const Table = require('cli-table3');
 
-const PackageParser = require('../src/parsers/packageParser');
-const DependencyGraph = require('../src/graph/dependencyGraph');
-const CompatibilityChecker = require('../src/checker/compatibilityChecker');
+const { checkCompatibility, pluginManager } = require('../src/index');
 
 const program = new Command();
 
 program
   .name('compatify')
-  .description('Detect dependency compatibility issues in Node.js projects')
-  .version('1.0.0');
+  .description('Detect dependency compatibility issues across multiple languages')
+  .version('1.0.2');
 
 /**
  * Format and display issues in a table
@@ -93,36 +91,35 @@ function displaySummary(summary, projectPath) {
 }
 
 /**
- * Main check function
+ * Main check function with plugin support
  */
 async function checkProject(projectPath, options) {
-  const spinner = ora('Analyzing project dependencies...').start();
+  const spinner = ora('Detecting project type...').start();
 
   try {
-    // Parse project
-    spinner.text = 'Parsing package.json and package-lock.json...';
-    const parser = new PackageParser();
-    const projectData = await parser.parseProject(projectPath);
-
-    if (!projectData.hasLockFile) {
-      spinner.warn(chalk.yellow('No package-lock.json found. Install dependencies first with npm install.'));
-      return;
+    // Auto-detect or use specified language
+    const detectedPlugin = await pluginManager.getBestPlugin(projectPath, options.language);
+    
+    if (!detectedPlugin) {
+      spinner.fail(chalk.red('Could not detect project type'));
+      console.log(chalk.yellow('\nSupported languages:'));
+      pluginManager.getSupportedLanguages().forEach(lang => {
+        console.log(chalk.cyan(`  • ${lang}`));
+      });
+      console.log(chalk.dim('\nUse --language flag to specify explicitly\n'));
+      process.exit(1);
     }
 
-    // Build dependency graph
-    spinner.text = 'Building dependency graph...';
-    const graph = DependencyGraph.buildFromProject(projectData);
+    const languageName = detectedPlugin.language;
+    spinner.text = `Analyzing ${languageName} project dependencies...`;
 
-    if (options.verbose) {
-      const stats = graph.getStats();
-      spinner.info(`Found ${stats.totalPackages} packages (${stats.directDependencies} direct, ${stats.transitiveDependencies} transitive)`);
-      spinner.start();
-    }
+    // Run compatibility check using plugin
+    const results = await checkCompatibility(projectPath, {
+      language: options.language,
+      rulesPath: options.rulesPath
+    });
 
-    // Check compatibility
-    spinner.text = 'Checking compatibility rules...';
-    const checker = new CompatibilityChecker();
-    const issues = await checker.check(graph, projectData.metadata);
+    const { issues, summary, metadata, plugin } = results;
 
     spinner.stop();
 
@@ -130,15 +127,14 @@ async function checkProject(projectPath, options) {
     if (options.json) {
       console.log(JSON.stringify({
         projectPath,
-        projectName: projectData.metadata.name,
+        projectName: metadata.name,
+        language: plugin.language,
         nodeVersion: process.version,
         issues,
-        summary: checker.getSummary()
+        summary
       }, null, 2));
     } else {
-      console.log(chalk.bold(`\n🔍 Analyzing dependencies in: ${projectPath}\n`));
-      
-      const summary = checker.getSummary();
+      console.log(chalk.bold(`\n🔍 Analyzing ${chalk.cyan(plugin.language)} project: ${projectPath}\n`));
       
       if (issues.length > 0) {
         const errorCount = summary.errors;
@@ -164,7 +160,7 @@ async function checkProject(projectPath, options) {
     }
 
     // Exit with error code if there are errors
-    if (checker.getSummary().errors > 0) {
+    if (summary.errors > 0) {
       process.exit(1);
     }
 
@@ -183,6 +179,7 @@ async function checkProject(projectPath, options) {
 program
   .command('check')
   .description('Check compatibility issues in the current directory')
+  .option('-l, --language <lang>', 'Specify language explicitly (nodejs, python, etc.)')
   .option('-v, --verbose', 'Show detailed output')
   .option('-j, --json', 'Output results as JSON')
   .action(async (options) => {
@@ -194,11 +191,26 @@ program
 program
   .command('scan <path>')
   .description('Check compatibility issues in a specific project')
+  .option('-l, --language <lang>', 'Specify language explicitly (nodejs, python, etc.)')
   .option('-v, --verbose', 'Show detailed output')
   .option('-j, --json', 'Output results as JSON')
   .action(async (projectPath, options) => {
     const absolutePath = path.resolve(projectPath);
     await checkProject(absolutePath, options);
+  });
+
+// Languages command - show supported languages
+program
+  .command('languages')
+  .description('List all supported programming languages')
+  .action(() => {
+    console.log(chalk.bold('\n🌐 Supported Languages:\n'));
+    const plugins = pluginManager.getPluginsInfo();
+    plugins.forEach(plugin => {
+      console.log(chalk.cyan(`  • ${plugin.language}`));
+      console.log(chalk.dim(`    ${plugin.description || plugin.name}`));
+      console.log(chalk.dim(`    Manifest files: ${plugin.manifestFiles.join(', ')}\n`));
+    });
   });
 
 // Parse arguments

@@ -8,7 +8,7 @@ const semver = require('semver');
 class CompatibilityChecker {
   constructor(rulesPath = null) {
     this.rules = null;
-    this.rulesPath = rulesPath || path.join(__dirname, '../../data/rules.json');
+    this.rulesPath = rulesPath || path.join(__dirname, '../../data/rules-node.json');
     this.issues = [];
   }
 
