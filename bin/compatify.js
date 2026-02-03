@@ -3,7 +3,7 @@
 const { Command } = require('commander');
 const chalk = require('chalk');
 const ora = require('ora');
-const path = require('path');
+const path = require('node:path');
 const Table = require('cli-table3');
 
 const { checkCompatibility } = require('../src/index');
@@ -39,11 +39,14 @@ function displayIssuesTable(issues) {
 
   for (const issue of issues) {
     const packageInfo = issue.package + (issue.version ? `@${issue.version}` : '');
-    const severity = issue.severity === 'error' 
-      ? chalk.red(issue.severity)
-      : issue.severity === 'warning'
-      ? chalk.yellow(issue.severity)
-      : chalk.blue(issue.severity);
+    let severity;
+    if (issue.severity === 'error') {
+      severity = chalk.red(issue.severity);
+    } else if (issue.severity === 'warning') {
+      severity = chalk.yellow(issue.severity);
+    } else {
+      severity = chalk.blue(issue.severity);
+    }
 
     table.push([packageInfo, severity, issue.message]);
   }

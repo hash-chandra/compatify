@@ -1,7 +1,7 @@
 const PackageParser = require('../src/parsers/packageParser');
-const path = require('path');
-const fs = require('fs').promises;
-const os = require('os');
+const path = require('node:path');
+const fs = require('node:fs').promises;
+const os = require('node:os');
 
 describe('PackageParser', () => {
   let parser;

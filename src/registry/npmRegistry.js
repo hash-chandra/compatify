@@ -1,6 +1,6 @@
-const fs = require('fs').promises;
-const path = require('path');
-const os = require('os');
+const fs = require('node:fs').promises;
+const path = require('node:path');
+const os = require('node:os');
 const pacote = require('pacote');
 
 /**
@@ -32,7 +32,7 @@ class NpmRegistry {
    * @private
    */
   _getCachePath(packageName, version = 'latest') {
-    const safeName = packageName.replace(/\//g, '-');
+    const safeName = packageName.replaceAll('/', '-');
     return path.join(this.cacheDir, `${safeName}-${version}.json`);
   }
 
@@ -185,7 +185,7 @@ class NpmRegistry {
 
     try {
       if (packageName) {
-        const safeName = packageName.replace(/\//g, '-');
+        const safeName = packageName.replaceAll('/', '-');
         const files = await fs.readdir(this.cacheDir);
         const toDelete = files.filter(f => f.startsWith(safeName));
         

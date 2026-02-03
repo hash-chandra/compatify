@@ -1,6 +1,6 @@
 const CompatibilityChecker = require('../src/checker/compatibilityChecker');
 const DependencyGraph = require('../src/graph/dependencyGraph');
-const path = require('path');
+const path = require('node:path');
 
 describe('CompatibilityChecker', () => {
   let checker;

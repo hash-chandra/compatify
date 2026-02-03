@@ -18,10 +18,12 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "eslint src/ test/",
-    "lint:fix": "eslint src/ test/ --fix",
+    "lint": "eslint src/ test/ bin/",
+    "lint:fix": "eslint src/ test/ bin/ --fix",
     "start": "node bin/compatify.js",
-    "prepublishOnly": "npm test && npm run lint"
+    "check": "node bin/compatify.js check",
+    "prepublishOnly": "npm test && npm run lint",
+    "validate": "npm run lint && npm test"
   },
   "keywords": [
     "compatibility",
