@@ -99,8 +99,8 @@ function displaySummary(summary, projectPath) {
 /**
  * Main check function
  */
-async function checkProject(projectPath, options) {
-  const spinner = ora('Analyzing Node.js project dependencies...').start();
+async function checkProject(projectPath, options, existingSpinner = null) {
+  const spinner = existingSpinner || ora('Analyzing Node.js project dependencies...').start();
 
   try {
     const results = await checkCompatibility(projectPath, options);
@@ -194,17 +194,24 @@ program
     try {
       tempDir = await GitHubFetcher.downloadRepository(githubUrl);
       spinner.text = 'Analyzing dependencies...';
-      await checkProject(tempDir, options);
+      await checkProject(tempDir, options, spinner);
+      
+      // Cleanup temp directory
+      if (tempDir) {
+        await GitHubFetcher.cleanup(tempDir);
+      }
     } catch (error) {
       spinner.fail(chalk.red(`Error: ${error.message}`));
       if (options.verbose) {
         console.error(error.stack);
       }
-      process.exit(1);
-    } finally {
+      
+      // Cleanup on error
       if (tempDir) {
         await GitHubFetcher.cleanup(tempDir);
       }
+      
+      process.exit(1);
     }
   });
 
